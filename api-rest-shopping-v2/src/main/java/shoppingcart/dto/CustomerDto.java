@@ -3,13 +3,13 @@ package shoppingcart.dto;
 public class CustomerDto {
 
     private Long id;
-    private String apellido;
-    private String nombre;
+    private String lastName;
+    private String name;
 
-    public CustomerDto(Long id, String apellido, String nombre) {
+    public CustomerDto(Long id, String lastName, String name) {
         this.id = id;
-        this.apellido = apellido;
-        this.nombre = nombre;
+        this.lastName = lastName;
+        this.name = name;
     }
 
     public Long getId() {
@@ -20,19 +20,19 @@ public class CustomerDto {
         this.id = id;
     }
 
-    public String getApellido() {
-        return this.apellido;
+    public String getLastName() {
+        return this.lastName;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getNombre() {
-        return this.nombre;
+    public String getName() {
+        return this.name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 }
