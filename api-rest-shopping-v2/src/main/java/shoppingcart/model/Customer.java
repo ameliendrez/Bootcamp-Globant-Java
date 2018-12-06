@@ -14,11 +14,13 @@ public class Customer {
     private String lastName;
     private String name;
 
-    public Customer(Long id, String lastName, String name) {
-        this.id = id;
+    public Customer(String lastName, String name) {
         this.lastName = lastName;
         this.name = name;
     }
+
+    public Customer() {
+    };
 
     public Long getId() {
         return this.id;

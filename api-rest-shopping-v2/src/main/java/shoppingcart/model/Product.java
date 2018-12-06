@@ -15,12 +15,14 @@ public class Product {
     private Double price;
     private int quantity;
 
-    public Product(Long id, String name, Double price, int quantity) {
-        this.id = id;
+    public Product(String name, Double price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
+
+    public Product() {
+    };
 
     public Long getId() {
         return this.id;

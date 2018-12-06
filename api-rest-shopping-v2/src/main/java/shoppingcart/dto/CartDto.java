@@ -1,6 +1,6 @@
 package shoppingcart.dto;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import shoppingcart.model.Customer;
 import shoppingcart.model.Product;
@@ -9,13 +9,14 @@ public class CartDto {
 
     private Long id;
     private Customer customer;
-    private ArrayList<Product> products;
+    private List<Product> products;
 
-    public CartDto(Long id, Customer customer, ArrayList<Product> products) {
-        this.id = id;
+    public CartDto(Customer customer) {
         this.customer = customer;
-        this.products = products;
-    }
+    };
+
+    public CartDto() {
+    };
 
     public Long getId() {
         return this.id;
@@ -33,23 +34,11 @@ public class CartDto {
         this.customer = customer;
     }
 
-    public ArrayList<Product> getProducts() {
+    public List<Product> getProducts() {
         return this.products;
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
-    }
-
-    public void addProduct(Product product) {
-        if (this.products == null)
-            this.products = new ArrayList<Product>();
-
-        this.products.add(product);
-    }
-
-    public void removeProduct(Product product) {
-        if (product != null)
-            this.products.remove(product);
     }
 }

@@ -1,11 +1,15 @@
 package shoppingcart.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Cart {
@@ -13,14 +17,18 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @OneToOne
     private Customer customer;
-    private ArrayList<Product> products;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Product> products;
 
-    public Cart(Long id, Customer customer, ArrayList<Product> products) {
-        this.id = id;
+    public Cart(Customer customer) {
         this.customer = customer;
-        this.products = products;
+        this.products = new ArrayList<Product>();
     }
+
+    public Cart() {
+    };
 
     public Long getId() {
         return this.id;
@@ -38,11 +46,11 @@ public class Cart {
         this.customer = customer;
     }
 
-    public ArrayList<Product> getProducts() {
+    public List<Product> getProducts() {
         return this.products;
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 

@@ -1,44 +1,55 @@
 package shoppingcart.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 import shoppingcart.model.Product;
+import shoppingcart.repository.ProductRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
 
-    private Map<Long, Product> products = new HashMap<>();
-    private AtomicLong counter = new AtomicLong();
+    @Autowired
+    private ProductRepository productRepository;
 
     public Product add(Product product) {
-        if (product.getId() == null) {
-            product.setId(this.counter.incrementAndGet());
-        }
-        this.products.put(product.getId(), product);
+        this.productRepository.save(product);
         return product;
     }
 
     public Product get(Long productId) {
-        if (this.products.containsKey(productId)) {
-            return this.products.get(productId);
-        }
-        return null;
+        return this.productRepository.findById(productId).get();
     }
 
     public List<Product> getAll() {
-        return (List<Product>) this.products.values();
+        return (List<Product>) this.productRepository.findAll();
     }
 
     public Product remove(Long productId) {
         Product remove = this.get(productId);
         if (remove != null) {
-            this.products.remove(productId);
-            return remove;
+            this.productRepository.delete(remove);
         }
         return null;
+    }
+
+    public Product setName(String name, Long productId) {
+        Product product = this.get(productId);
+        product.setName(name);
+        return this.productRepository.save(product);
+    }
+
+    public Product setPrice(Double price, Long productId) {
+        Product product = this.get(productId);
+        product.setPrice(price);
+        return this.productRepository.save(product);
+    }
+
+    public Product setQuantity(int quantity, Long productId) {
+        Product product = this.get(productId);
+        product.setQuantity(quantity);
+        return this.productRepository.save(product);
     }
 }

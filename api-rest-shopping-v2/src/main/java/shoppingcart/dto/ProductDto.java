@@ -7,8 +7,7 @@ public class ProductDto {
     private Double price;
     private int quantity;
 
-    public ProductDto(Long id, String name, Double price, int quantity) {
-        this.id = id;
+    public ProductDto(String name, Double price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;

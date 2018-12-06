@@ -6,8 +6,7 @@ public class CustomerDto {
     private String lastName;
     private String name;
 
-    public CustomerDto(Long id, String lastName, String name) {
-        this.id = id;
+    public CustomerDto(String lastName, String name) {
         this.lastName = lastName;
         this.name = name;
     }

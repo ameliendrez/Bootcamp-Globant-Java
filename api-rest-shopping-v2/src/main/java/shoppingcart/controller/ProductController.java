@@ -1,12 +1,13 @@
 package shoppingcart.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shoppingcart.model.Product;
 import shoppingcart.dto.ProductDto;
 import shoppingcart.service.ProductService;
-import shoppingcart.dto.Mapper;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,28 +23,39 @@ public class ProductController {
 
 	@Autowired
 	private ProductService products;
-	private Mapper mapper;
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@PostMapping("/product")
 	public ProductDto addProducto(@RequestBody ProductDto product) {
-		Product p = this.products.add(this.mapper.convertProductToEntity(product));
-		return mapper.convertProductToDto(p);
+		return this.convertToDto(this.products.add(this.convertToEntity(product)));
 	}
 
 	@GetMapping("/product/{id}")
 	public ProductDto getProduct(@PathVariable("id") Long productId) {
-		Product product = this.products.get(productId);
-		return mapper.convertProductToDto(product);
+		return this.convertToDto(this.products.get(productId));
 	}
 
 	@DeleteMapping("/product/{id}")
-	public void removeProduct(@PathVariable("id") long productId) {
-		this.products.remove(productId);
+	public ProductDto removeProduct(@PathVariable("id") long productId) {
+		return this.convertToDto(this.products.remove(productId));
 	}
 
 	@GetMapping("/products")
 	public List<ProductDto> getAllProducts() {
 		List<Product> allProducts = this.products.getAll();
-		return mapper.convertProductToDto(allProducts);
+		List<ProductDto> productsDto = new ArrayList<ProductDto>();
+		for (Product product : allProducts) {
+			productsDto.add(this.convertToDto(product));
+		}
+		return productsDto;
+	}
+
+	public Product convertToEntity(ProductDto productDto) {
+		return modelMapper.map(productDto, Product.class);
+	}
+
+	public ProductDto convertToDto(Product product) {
+		return modelMapper.map(product, ProductDto.class);
 	}
 }

@@ -1,12 +1,13 @@
 package shoppingcart.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shoppingcart.dto.CustomerDto;
 import shoppingcart.model.Customer;
 import shoppingcart.service.CustomerService;
-import shoppingcart.dto.Mapper;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,29 +23,39 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customers;
-	private Mapper mapper;
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@PostMapping("/customer")
 	public CustomerDto addCustomer(@RequestBody CustomerDto customer) {
-		Customer c = this.customers.add(this.mapper.convertCustomerToEntity(customer));
-		return mapper.convertCustomerToDto(c);
+		return this.convertToDto(this.customers.add(this.convertToEntity(customer)));
 	}
 
 	@GetMapping("/customer/{id}")
 	public CustomerDto getProduct(@PathVariable("id") Long customerId) {
-		Customer customer = this.customers.get(customerId);
-		return mapper.convertCustomerToDto(customer);
+		return this.convertToDto(this.customers.get(customerId));
 	}
 
 	@DeleteMapping("/customer/{id}")
-	public void removeCustomer(@PathVariable("id") long customerId) {
-		this.customers.remove(customerId);
+	public CustomerDto removeCustomer(@PathVariable("id") long customerId) {
+		return this.convertToDto(this.customers.remove(customerId));
 	}
 
 	@GetMapping("/customers")
 	public List<CustomerDto> getAllCustomers() {
 		List<Customer> allCustomers = this.customers.getAll();
-		return mapper.convertCustomerToDto(allCustomers);
+		List<CustomerDto> customersDto = new ArrayList<CustomerDto>();
+		for (Customer customer : allCustomers) {
+			customersDto.add(this.convertToDto(customer));
+		}
+		return customersDto;
 	}
 
+	private CustomerDto convertToDto(Customer customer) {
+		return modelMapper.map(customer, CustomerDto.class);
+	}
+
+	private Customer convertToEntity(CustomerDto customerDto) {
+		return modelMapper.map(customerDto, Customer.class);
+	}
 }
