@@ -1,14 +1,13 @@
 package shoppingcart.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shoppingcart.model.Cart;
-import shoppingcart.model.Product;
-import shoppingcart.model.Customer;
 import shoppingcart.service.CartService;
-import shoppingcart.service.ProductService;
-import shoppingcart.service.CustomerService;
+import shoppingcart.dto.CartDto;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,47 +23,55 @@ import org.springframework.web.bind.annotation.RestController;
 public class CartController {
 
 	@Autowired
-	private ProductService products;
-	@Autowired
 	private CartService carts;
 	@Autowired
-	private CustomerService customers;
+	private ModelMapper modelMapper;
 
 	@PostMapping("/carts")
-	public Cart addCart(@RequestBody Cart cart) {
-		return this.carts.addCart(cart);
+	public CartDto addCart(@RequestBody CartDto cart) {
+		return this.convertToDto(this.carts.addCart(this.convertToEntity(cart)));
 	}
 
 	@GetMapping("/carts/{id}")
-	public Cart getCart(@PathVariable("id") Long cartId) {
-		return this.carts.getCart(cartId);
+	public CartDto getCart(@PathVariable("id") Long cartId) {
+		return this.convertToDto(this.carts.getCart(cartId));
 	}
 
 	@DeleteMapping("/carts/{id}")
-	public Cart removeCart(@PathVariable("cart_id") long cartId) {
-		return this.carts.removeCart(cartId);
+	public CartDto removeCart(@PathVariable("cart_id") long cartId) {
+		return this.convertToDto(this.carts.removeCart(cartId));
 	}
 
 	@GetMapping("/carts")
-	public List<Cart> getAllCarts() {
-		return this.carts.getCarts();
+	public List<CartDto> getAllCarts() {
+		List<Cart> allCarts = this.carts.getCarts();
+		List<CartDto> cartsDto = new ArrayList<CartDto>();
+		for (Cart cart : allCarts) {
+			cartsDto.add(this.convertToDto(cart));
+		}
+		return cartsDto;
 	}
 
 	@PutMapping("/carts/{cartId}/products/{productId}")
-	public Cart addProduct(@PathVariable("cartId") long cartId, @PathVariable("productId") long productId) {
-		Product product = this.products.get(productId);
-		return this.carts.addProduct(cartId, product);
+	public CartDto addProduct(@PathVariable("cartId") long cartId, @PathVariable("productId") long productId) {
+		return this.convertToDto(this.carts.addProduct(cartId, productId));
 	}
 
 	@DeleteMapping("/carts/{cartId}/products/{productId}")
-	public Cart removeProduct(@PathVariable("cart_id") long cartId, @PathVariable("product_id") long productId) {
-		Product product = this.products.get(productId);
-		return this.carts.removeProduct(cartId, product);
+	public CartDto removeProduct(@PathVariable("cart_id") long cartId, @PathVariable("product_id") long productId) {
+		return this.convertToDto(this.carts.removeProduct(cartId, productId));
 	}
 
 	@PutMapping("/cart/{cartId}/customer/{customerId}")
-	public Cart setCustomer(@PathVariable("cartId") Long cartId, @PathVariable("customerId") Long customerId) {
-		Customer customer = this.customers.get(customerId);
-		return this.carts.addCustomer(cartId, customer);
+	public CartDto setCustomer(@PathVariable("cartId") Long cartId, @PathVariable("customerId") Long customerId) {
+		return this.convertToDto(this.carts.addCustomer(cartId, customerId));
+	}
+
+	private CartDto convertToDto(Cart cart) {
+		return modelMapper.map(cart, CartDto.class);
+	}
+
+	private Cart convertToEntity(CartDto cartDto) {
+		return modelMapper.map(cartDto, Cart.class);
 	}
 }
