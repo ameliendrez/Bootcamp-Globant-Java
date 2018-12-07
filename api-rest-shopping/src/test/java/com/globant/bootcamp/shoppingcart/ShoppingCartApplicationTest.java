@@ -1,4 +1,4 @@
-package test;
+package com.globant.bootcamp.shoppingcart;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

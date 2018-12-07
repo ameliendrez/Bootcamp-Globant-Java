@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/shoppingCart")
+@RequestMapping("/shoppingCart/products")
 public class ProductController {
 
 	@Autowired
@@ -26,22 +26,22 @@ public class ProductController {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@PostMapping("/product")
+	@PostMapping("/")
 	public ProductDto addProducto(@RequestBody ProductDto product) {
 		return this.convertToDto(this.products.add(this.convertToEntity(product)));
 	}
 
-	@GetMapping("/product/{id}")
+	@GetMapping("/{id}")
 	public ProductDto getProduct(@PathVariable("id") Long productId) {
 		return this.convertToDto(this.products.get(productId));
 	}
 
-	@DeleteMapping("/product/{id}")
+	@DeleteMapping("/{id}")
 	public ProductDto removeProduct(@PathVariable("id") long productId) {
 		return this.convertToDto(this.products.remove(productId));
 	}
 
-	@GetMapping("/products")
+	@GetMapping("/")
 	public List<ProductDto> getAllProducts() {
 		List<Product> allProducts = this.products.getAll();
 		List<ProductDto> productsDto = new ArrayList<ProductDto>();

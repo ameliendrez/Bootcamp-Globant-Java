@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/shoppingCart")
+@RequestMapping("/shoppingCart/customers")
 public class CustomerController {
 
 	@Autowired
@@ -26,22 +26,22 @@ public class CustomerController {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@PostMapping("/customer")
+	@PostMapping("/")
 	public CustomerDto addCustomer(@RequestBody CustomerDto customer) {
 		return this.convertToDto(this.customers.add(this.convertToEntity(customer)));
 	}
 
-	@GetMapping("/customer/{id}")
+	@GetMapping("/{id}")
 	public CustomerDto getProduct(@PathVariable("id") Long customerId) {
 		return this.convertToDto(this.customers.get(customerId));
 	}
 
-	@DeleteMapping("/customer/{id}")
+	@DeleteMapping("/{id}")
 	public CustomerDto removeCustomer(@PathVariable("id") long customerId) {
 		return this.convertToDto(this.customers.remove(customerId));
 	}
 
-	@GetMapping("/customers")
+	@GetMapping("/")
 	public List<CustomerDto> getAllCustomers() {
 		List<Customer> allCustomers = this.customers.getAll();
 		List<CustomerDto> customersDto = new ArrayList<CustomerDto>();
