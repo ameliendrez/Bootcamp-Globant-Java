@@ -1,7 +1,7 @@
-package shoppingcart;
+package com.globant.bootcamp.shoppingcart;
 
-import shoppingcart.service.*;
-import shoppingcart.model.*;
+import com.globant.bootcamp.shoppingcart.service.*;
+import com.globant.bootcamp.shoppingcart.model.*;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

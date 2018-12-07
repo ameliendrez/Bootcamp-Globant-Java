@@ -1,4 +1,4 @@
-package shoppingcart.controller;
+package com.globant.bootcamp.shoppingcart.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,9 +1,9 @@
-package shoppingcart.service;
+package com.globant.bootcamp.shoppingcart.service;
 
 import java.util.List;
 
-import shoppingcart.repository.CustomerRepository;
-import shoppingcart.model.Customer;
+import com.globant.bootcamp.shoppingcart.repository.CustomerRepository;
+import com.globant.bootcamp.shoppingcart.model.Customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

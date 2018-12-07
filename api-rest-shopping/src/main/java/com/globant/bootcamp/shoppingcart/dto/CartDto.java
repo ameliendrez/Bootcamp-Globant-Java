@@ -1,9 +1,9 @@
-package shoppingcart.dto;
+package com.globant.bootcamp.shoppingcart.dto;
 
 import java.util.List;
 
-import shoppingcart.model.Customer;
-import shoppingcart.model.Product;
+import com.globant.bootcamp.shoppingcart.model.Customer;
+import com.globant.bootcamp.shoppingcart.model.Product;
 
 public class CartDto {
 

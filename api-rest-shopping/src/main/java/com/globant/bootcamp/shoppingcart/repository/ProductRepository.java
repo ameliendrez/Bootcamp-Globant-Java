@@ -1,6 +1,6 @@
-package shoppingcart.repository;
+package com.globant.bootcamp.shoppingcart.repository;
 
-import shoppingcart.model.Product;
+import com.globant.bootcamp.shoppingcart.model.Product;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ProductRepository extends CrudRepository<Product, Long> {

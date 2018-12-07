@@ -1,4 +1,4 @@
-package shoppingcart.model;
+package com.globant.bootcamp.shoppingcart.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,5 +69,41 @@ public class Cart {
     @Override
     public String toString() {
         return String.format("Cart[id=%d, customer='%s', products='%s']", id, customer, products);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + ((products == null) ? 0 : products.hashCode());
+        result = prime * result + ((customer == null) ? 0 : customer.hashCode());
+
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+
+        Cart other = (Cart) obj;
+        if (this.id != other.id)
+            return false;
+        if (this.products == null) {
+            if (other.products != null)
+                return false;
+        } else if (!this.products.equals(other.products))
+            return false;
+        if (this.customer == null) {
+            if (other.customer != null)
+                return false;
+        } else if (!this.customer.equals(other.customer))
+            return false;
+        return true;
     }
 }

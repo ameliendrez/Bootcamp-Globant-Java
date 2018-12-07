@@ -1,11 +1,11 @@
-package shoppingcart.controller;
+package com.globant.bootcamp.shoppingcart.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import shoppingcart.model.Product;
-import shoppingcart.dto.ProductDto;
-import shoppingcart.service.ProductService;
+import com.globant.bootcamp.shoppingcart.model.Product;
+import com.globant.bootcamp.shoppingcart.dto.ProductDto;
+import com.globant.bootcamp.shoppingcart.service.ProductService;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

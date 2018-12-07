@@ -1,28 +1,17 @@
-package shoppingcart.model;
+package com.globant.bootcamp.shoppingcart.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class ProductDto {
 
-@Entity
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private Double price;
-    private int quantity;
+    private Integer quantity;
 
-    public Product(String name, Double price, int quantity) {
+    public ProductDto(String name, Double price, Integer quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
-
-    public Product() {
-    };
 
     public Long getId() {
         return this.id;
@@ -48,16 +37,11 @@ public class Product {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return this.quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Product[id=%d, name='%s', price='%s', quantity='%s']", id, name, price, quantity);
     }
 }
