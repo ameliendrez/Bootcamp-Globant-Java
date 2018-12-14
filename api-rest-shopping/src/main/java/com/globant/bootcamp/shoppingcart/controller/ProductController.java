@@ -9,6 +9,7 @@ import com.globant.bootcamp.shoppingcart.service.ProductService;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,13 +27,18 @@ public class ProductController {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	// @PostMapping("/")
+	// public ProductDto addProducto(@RequestBody ProductDto product) {
+	// return this.convertToDto(this.products.add(this.convertToEntity(product)));
+	// }
+
 	@PostMapping("/")
-	public ProductDto addProducto(@RequestBody ProductDto product) {
-		return this.convertToDto(this.products.add(this.convertToEntity(product)));
+	public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto product) {
+		return ResponseEntity.created(null).body(this.convertToDto(this.products.add(this.convertToEntity(product))));
 	}
 
 	@GetMapping("/{id}")
-	public ProductDto getProduct(@PathVariable("id") Long productId) {
+	public ProductDto getProduct(@PathVariable("id") Long productId){
 		return this.convertToDto(this.products.get(productId));
 	}
 

@@ -2,6 +2,7 @@ package com.globant.bootcamp.shoppingcart.service;
 
 import java.util.List;
 
+import com.globant.bootcamp.shoppingcart.exception.ProductNotFoundException;
 import com.globant.bootcamp.shoppingcart.model.Product;
 import com.globant.bootcamp.shoppingcart.repository.ProductRepository;
 
@@ -14,13 +15,18 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public Product add(Product product) {
-        this.productRepository.save(product);
-        return product;
+    public Product add(Product product){
+        if(product != null)
+            return this.productRepository.save(product);
+            
+        throw new IllegalArgumentException("No exist this product");
     }
 
     public Product get(Long productId) {
-        return this.productRepository.findById(productId).get();
+        if(this.productRepository.existsById(productId))
+            return this.productRepository.findById(productId).get();
+            
+        throw new ProductNotFoundException(productId);
     }
 
     public List<Product> getAll() {
@@ -28,11 +34,14 @@ public class ProductService {
     }
 
     public Product remove(Long productId) {
-        Product remove = this.get(productId);
-        if (remove != null) {
-            this.productRepository.delete(remove);
+        if(this.productRepository.existsById(productId)){
+            Product remove = this.get(productId);
+            if (remove != null) {
+                this.productRepository.delete(remove);
+            }
+            return null;
         }
-        return null;
+        throw new ProductNotFoundException(productId);
     }
 
     public Product setName(String name, Long productId) {

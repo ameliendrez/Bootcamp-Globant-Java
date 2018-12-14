@@ -11,6 +11,9 @@ public class CustomerDto {
         this.name = name;
     }
 
+    public CustomerDto() {
+    }
+
     public Long getId() {
         return this.id;
     }

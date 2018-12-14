@@ -72,6 +72,8 @@ public class ShoppingApplication {
             carts.addCart(cart2);
             carts.addCustomer(cart2.getId(), c2.getId());
             carts.addProduct(cart2.getId(), p4.getId());
+
+            // Product np = products.get(L99);
         };
     }
 }

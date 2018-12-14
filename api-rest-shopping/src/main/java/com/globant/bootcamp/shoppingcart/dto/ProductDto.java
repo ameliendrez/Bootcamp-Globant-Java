@@ -13,6 +13,9 @@ public class ProductDto {
         this.quantity = quantity;
     }
 
+    public ProductDto() {
+    }
+
     public Long getId() {
         return this.id;
     }
